@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import electronLogo from './assets/electron.svg'
+import tailwindLogo from './assets/tailwindcss.svg'
 import './App.css'
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
     <>
       <div>
         <a href="https://electronjs.org" target="_blank">
-          <img src={electronLogo} className="logo" alt="Electron logo" />
+          <img src={electronLogo} className="logo react" alt="Electron logo" />
         </a>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -19,8 +20,11 @@ function App() {
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
+        <a href="https://tailwindcss.com" target="_blank">
+          <img src={tailwindLogo} className="logo tailwind" alt="Tailwind logo" />
+        </a>
       </div>
-      <h1>Electron + Vite + React</h1>
+      <h1>Electron + Vite + React + Tailwind</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}

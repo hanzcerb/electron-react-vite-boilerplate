@@ -1,6 +1,6 @@
 {
   "appId": "com.hanips.electron-react-vite-boilerplate",
-  "files": ["dist-electron", "dis-react"],
+  "files": ["dist-electron", "dist-react"],
   "icon": "./desktopIcon",
   "mac": {
     "target": "dmg"
