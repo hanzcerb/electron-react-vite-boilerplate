@@ -1,0 +1,7 @@
+dist
+dist-electron
+dist-react
+node_modules
+package-lock.json
+*.local
+.vscode

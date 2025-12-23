@@ -1,42 +1,22 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import electronLogo from './assets/electron.svg'
-import tailwindLogo from './assets/tailwindcss.svg'
-import './App.css'
+import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import { Suspense, lazy } from 'react'
+import { Layout } from './components/layout/Layout'
+
+const WelcomePage = lazy(() => import('./pages/WelcomePage'))
+const AboutPage = lazy(() => import('./pages/AboutPage'))
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://electronjs.org" target="_blank">
-          <img src={electronLogo} className="logo react" alt="Electron logo" />
-        </a>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-        <a href="https://tailwindcss.com" target="_blank">
-          <img src={tailwindLogo} className="logo tailwind" alt="Tailwind logo" />
-        </a>
-      </div>
-      <h1>Electron + Vite + React + Tailwind</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Router>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route>
+            <Route path="/" element={<WelcomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+          </Route>
+        </Routes>
+      </Suspense>
+    </Router>
   )
 }
 
