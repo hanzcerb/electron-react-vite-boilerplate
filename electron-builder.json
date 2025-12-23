@@ -1,0 +1,15 @@
+{
+  "appId": "com.hanips.electron-react-vite-boilerplate",
+  "files": ["dist-electron", "dis-react"],
+  "icon": "./desktopIcon",
+  "mac": {
+    "target": "dmg"
+  },
+  "win": {
+    "target": ["portable", "msi"]
+  },
+  "linux": {
+    "target": "AppImage",
+    "category": "Utility"
+  }
+}
