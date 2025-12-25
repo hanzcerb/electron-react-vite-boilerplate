@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, Home, Info, User, ChevronRight, ChevronLeft } from 'lucide-react'
-import desktopIcon from '../../assets/images/desktopIcon.png'
-import { useUser } from '../../context/UserContext'
+import { Home, Info, User, ChevronRight, ChevronLeft } from 'lucide-react'
+import desktopIcon from '@/ui/assets/images/desktopIcon.png'
+import { useUser } from '@/ui/context/UserContext'
 
 export function Sidebar() {
   const { username } = useUser()

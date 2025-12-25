@@ -1,12 +1,12 @@
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import { Suspense, lazy } from 'react'
-import { Layout } from './components/layouts/SidebarLayout'
-import { UserProvider } from './context/UserContext'
+import { Layout } from '@/ui/components/layouts/SidebarLayout'
+import { UserProvider } from '@/ui/context/UserContext'
 
-const WelcomePage = lazy(() => import('./pages/WelcomePage'))
-const AboutPage = lazy(() => import('./pages/AboutPage'))
+const WelcomePage = lazy(() => import('@/ui/pages/WelcomePage'))
+const AboutPage = lazy(() => import('@/ui/pages/AboutPage'))
 
-const ProfilePage = lazy(() => import('./pages/ProfilePage'))
+const ProfilePage = lazy(() => import('@/ui/pages/ProfilePage'))
 
 function App() {
   return (

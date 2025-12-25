@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import reactLogo from '../assets/icons/react.svg'
-import viteLogo from '../assets/icons/vite.svg'
-import electronLogo from '../assets/icons/electron.svg'
-import tailwindLogo from '../assets/icons/tailwindcss.svg'
+import reactLogo from '@/ui/assets/icons/react.svg'
+import viteLogo from '@/ui/assets/icons/vite.svg'
+import electronLogo from '@/ui/assets/icons/electron.svg'
+import tailwindLogo from '@/ui/assets/icons/tailwindcss.svg'
 
 export default function WelcomePage() {
   const [count, setCount] = useState(0)
