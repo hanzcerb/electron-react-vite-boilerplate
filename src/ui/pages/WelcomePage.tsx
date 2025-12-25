@@ -8,7 +8,7 @@ export default function WelcomePage() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className="h-screen w-screen">
+    <div className="h-full w-full">
       <div className="flex h-full w-full flex-col items-center justify-center gap-10">
         <div className="flex justify-center gap-16">
           <a href="https://electronjs.org" target="_blank">
