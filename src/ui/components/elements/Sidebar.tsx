@@ -3,9 +3,11 @@ import { Link, useLocation } from 'react-router-dom'
 import { Home, Info, User, ChevronRight, ChevronLeft, Moon, Sun, Monitor } from 'lucide-react'
 import desktopIcon from '@/ui/assets/images/desktopIcon.png'
 import { useUser } from '@/ui/context/UserContext'
+import { useTheme } from '@/ui/context/ThemeContext'
 
 export function Sidebar() {
   const { username } = useUser()
+  const { themePreference, setThemePreference, themeColor } = useTheme()
   const [isCollapsed, setIsCollapsed] = useState(false)
   const location = useLocation()
 
@@ -16,14 +18,18 @@ export function Sidebar() {
 
   return (
     <aside
-      className={`relative flex h-full flex-col justify-between border-r border-gray-200 bg-white shadow-sm transition-all duration-300 dark:border-gray-800 dark:bg-gray-900 ${
-        isCollapsed ? 'w-20' : 'w-64'
-      }`}
+      className={`relative flex h-full flex-col justify-between border-r shadow-sm transition-all duration-300 ${
+        themeColor === 'dark' ? 'border-gray-800 bg-gray-900' : 'border-gray-200 bg-white'
+      } ${isCollapsed ? 'w-20' : 'w-64'}`}
     >
       {/* Collapse Toggle Button - Floating */}
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute top-9 -right-3 z-10 flex h-6 w-6 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 shadow-sm hover:text-blue-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-blue-400"
+        className={`absolute top-9 -right-3 z-10 flex h-6 w-6 items-center justify-center rounded-full border shadow-sm ${
+          themeColor === 'dark'
+            ? 'border-gray-700 bg-gray-800 text-gray-400 hover:text-blue-400'
+            : 'border-gray-200 bg-white text-gray-500 hover:text-blue-600'
+        }`}
       >
         {isCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
       </button>
@@ -42,10 +48,18 @@ export function Sidebar() {
 
             {!isCollapsed && (
               <div className="flex flex-col">
-                <span className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+                <span
+                  className={`text-lg font-bold tracking-tight ${
+                    themeColor === 'dark' ? 'text-white' : 'text-gray-900'
+                  }`}
+                >
                   Electron
                 </span>
-                <span className="text-xs font-medium text-blue-600 dark:text-blue-400">
+                <span
+                  className={`text-xs font-medium ${
+                    themeColor === 'dark' ? 'text-blue-400' : 'text-blue-600'
+                  }`}
+                >
                   Boilerplate
                 </span>
               </div>
@@ -63,16 +77,24 @@ export function Sidebar() {
                 to={item.path}
                 className={`group flex items-center rounded-lg px-3 py-2.5 transition-all duration-200 ${
                   isActive
-                    ? 'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white'
+                    ? themeColor === 'dark'
+                      ? 'bg-blue-900/20 text-blue-400'
+                      : 'bg-blue-50 text-blue-600'
+                    : themeColor === 'dark'
+                      ? 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 } ${isCollapsed ? 'justify-center' : ''}`}
               >
                 <item.icon
                   size={20}
                   className={`shrink-0 transition-colors ${
                     isActive
-                      ? 'text-blue-600 dark:text-blue-400'
-                      : 'text-gray-400 group-hover:text-gray-600 dark:text-gray-500 dark:group-hover:text-gray-300'
+                      ? themeColor === 'dark'
+                        ? 'text-blue-400'
+                        : 'text-blue-600'
+                      : themeColor === 'dark'
+                        ? 'text-gray-500 group-hover:text-gray-300'
+                        : 'text-gray-400 group-hover:text-gray-600'
                   }`}
                 />
                 {!isCollapsed && <span className="ml-3 text-sm font-medium">{item.label}</span>}
@@ -87,44 +109,87 @@ export function Sidebar() {
         </nav>
 
         {/* User Bottom Section */}
-        <div className="space-y-5 border-t border-gray-100 p-4 dark:border-gray-800">
+        <div
+          className={`space-y-5 border-t p-4 ${
+            themeColor === 'dark' ? 'border-gray-800' : 'border-gray-300'
+          }`}
+        >
           {/* Toggle between Light mode, Dark mode, and System mode */}
           <div
             className={`${isCollapsed ? 'flex flex-col' : 'flex'} items-center justify-center gap-5`}
           >
             {[
-              { icon: Sun, label: 'Light Mode' },
-              { icon: Monitor, label: 'System Mode' },
-              { icon: Moon, label: 'Dark Mode' },
-            ].map(({ icon: Icon, label }) => (
-              <div key={label} className="group relative flex items-center justify-center">
-                <button className="cursor-pointer rounded-lg p-1 transition-all hover:bg-gray-300 hover:text-slate-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                  <Icon size={20} />
-                </button>
-                <span className="pointer-events-none absolute bottom-full mb-2 scale-0 rounded bg-gray-900 px-2 py-1 text-sm font-medium whitespace-nowrap text-white transition-all group-hover:scale-100 dark:bg-gray-700">
-                  {label}
-                </span>
-              </div>
-            ))}
+              { icon: Sun, label: 'Light Mode', value: 'light' },
+              { icon: Monitor, label: 'System Mode', value: 'system' },
+              { icon: Moon, label: 'Dark Mode', value: 'dark' },
+            ].map(({ icon: Icon, label, value }) => {
+              const isSelected = themePreference === value
+              return (
+                <div key={label} className="group relative flex items-center justify-center">
+                  <button
+                    onClick={() => setThemePreference(value as any)}
+                    className={`cursor-pointer rounded-lg p-1 transition-all ${
+                      isSelected
+                        ? themeColor === 'dark'
+                          ? 'bg-blue-900/30 text-blue-400'
+                          : 'bg-blue-100 text-blue-600'
+                        : themeColor === 'dark'
+                          ? 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                          : 'text-gray-400 hover:bg-gray-100 hover:text-slate-800'
+                    }`}
+                  >
+                    <Icon size={20} />
+                  </button>
+                  <span
+                    className={`pointer-events-none absolute bottom-full mb-2 scale-0 rounded px-2 py-1 text-xs font-medium whitespace-nowrap text-white transition-all group-hover:scale-100 ${
+                      themeColor === 'dark' ? 'bg-gray-700' : 'bg-gray-900'
+                    }`}
+                  >
+                    {label}
+                  </span>
+                </div>
+              )
+            })}
           </div>
 
           {/* User Profile Section */}
           <Link
             to="/profile"
-            className={`group flex items-center gap-3 rounded-xl p-2 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800 ${
-              isCollapsed ? 'justify-center' : ''
-            } ${location.pathname === '/profile' ? 'bg-gray-50 dark:bg-gray-800' : ''}`}
+            className={`group flex items-center gap-3 rounded-xl p-2 transition-colors ${
+              themeColor === 'dark' ? 'hover:bg-gray-800' : 'hover:bg-gray-50'
+            } ${isCollapsed ? 'justify-center' : ''} ${
+              location.pathname === '/profile'
+                ? themeColor === 'dark'
+                  ? 'bg-gray-800'
+                  : 'bg-gray-50'
+                : ''
+            }`}
           >
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-100 ring-2 ring-white dark:bg-gray-700 dark:ring-gray-900">
-              <User size={20} className="text-gray-500 dark:text-gray-300" />
+            <div
+              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ring-2 ${
+                themeColor === 'dark' ? 'bg-gray-700 ring-gray-900' : 'bg-gray-100 ring-white'
+              }`}
+            >
+              <User
+                size={20}
+                className={themeColor === 'dark' ? 'text-gray-300' : 'text-gray-500'}
+              />
             </div>
 
             {!isCollapsed && (
               <div className="flex flex-1 flex-col overflow-hidden">
-                <span className="truncate text-sm font-semibold text-gray-900 dark:text-white">
+                <span
+                  className={`truncate text-sm font-semibold ${
+                    themeColor === 'dark' ? 'text-white' : 'text-gray-900'
+                  }`}
+                >
                   {username}
                 </span>
-                <span className="truncate text-xs text-gray-500 dark:text-gray-400">
+                <span
+                  className={`truncate text-xs ${
+                    themeColor === 'dark' ? 'text-gray-400' : 'text-gray-500'
+                  }`}
+                >
                   View Profile
                 </span>
               </div>
