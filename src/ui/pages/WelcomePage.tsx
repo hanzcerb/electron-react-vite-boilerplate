@@ -40,20 +40,21 @@ export default function WelcomePage() {
             />
           </a>
         </div>
-        <h1 className="text-center text-3xl font-semibold">Electron + Vite + React + Tailwind</h1>
-        {/* <text className="text-3xl font-bold underline">Hello this using Tailwind Styling</text> */}
-        <div className="card text-center">
-          <button
-            className="cursor-pointer rounded-lg bg-[#1a1a1a] px-4 py-2 font-bold text-white transition-all duration-300 hover:ring hover:ring-violet-500"
-            onClick={() => setCount((count) => count + 1)}
-          >
-            count is {count}
-          </button>
-          <p className="mt-4 text-center">
-            Edit <code>src/App.tsx</code> and save to test HMR
-          </p>
+        <div className="flex flex-col items-center gap-4">
+          <h1 className="text-center text-3xl font-semibold">Electron + Vite + React + Tailwind</h1>
+          <div className="space-y-4 text-center">
+            <button
+              className="cursor-pointer rounded-lg bg-[#1a1a1a] px-4 py-2 font-bold text-white transition-all duration-300 hover:ring hover:ring-violet-500"
+              onClick={() => setCount((count) => count + 1)}
+            >
+              count is {count}
+            </button>
+            <p className="text-center">
+              Edit <code>src/ui/pages/WelcomePage.tsx</code> and save to test HMR
+            </p>
+          </div>
+          <p className="text-center">Click on the logos to learn more</p>
         </div>
-        <p className="read-the-docs text-center">Click on the logos to learn more</p>
       </div>
     </div>
   )

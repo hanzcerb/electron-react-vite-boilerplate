@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Home, Info, User, ChevronRight, ChevronLeft } from 'lucide-react'
+import { Home, Info, User, ChevronRight, ChevronLeft, Moon, Sun, Monitor } from 'lucide-react'
 import desktopIcon from '@/ui/assets/images/desktopIcon.png'
 import { useUser } from '@/ui/context/UserContext'
 
@@ -86,8 +86,29 @@ export function Sidebar() {
           })}
         </nav>
 
-        {/* User Profile Section */}
-        <div className="border-t border-gray-100 p-4 dark:border-gray-800">
+        {/* User Bottom Section */}
+        <div className="space-y-5 border-t border-gray-100 p-4 dark:border-gray-800">
+          {/* Toggle between Light mode, Dark mode, and System mode */}
+          <div
+            className={`${isCollapsed ? 'flex flex-col' : 'flex'} items-center justify-center gap-5`}
+          >
+            {[
+              { icon: Sun, label: 'Light Mode' },
+              { icon: Monitor, label: 'System Mode' },
+              { icon: Moon, label: 'Dark Mode' },
+            ].map(({ icon: Icon, label }) => (
+              <div key={label} className="group relative flex items-center justify-center">
+                <button className="cursor-pointer rounded-lg p-1 transition-all hover:bg-gray-300 hover:text-slate-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                  <Icon size={20} />
+                </button>
+                <span className="pointer-events-none absolute bottom-full mb-2 scale-0 rounded bg-gray-900 px-2 py-1 text-sm font-medium whitespace-nowrap text-white transition-all group-hover:scale-100 dark:bg-gray-700">
+                  {label}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* User Profile Section */}
           <Link
             to="/profile"
             className={`group flex items-center gap-3 rounded-xl p-2 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800 ${

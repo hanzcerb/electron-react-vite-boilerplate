@@ -1,8 +1,6 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, shell } from 'electron'
 import path from 'path'
 import { isDev } from './util.js'
-
-// type test = string;
 
 app.on('ready', () => {
   const mainWindow = new BrowserWindow({})
@@ -12,4 +10,13 @@ app.on('ready', () => {
   } else {
     mainWindow.loadFile(path.join(app.getAppPath(), '/dist-react/index.html'))
   }
+
+  // Intercept request to open new window
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    // Check if URL is a safe external link
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      shell.openExternal(url)
+    }
+    return { action: 'deny' }
+  })
 })
